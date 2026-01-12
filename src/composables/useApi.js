@@ -1,7 +1,9 @@
 import { ref } from 'vue'
 
-// Get API endpoint from runtime config or fallback to same origin
-const API_BASE = window.satpassConfig?.apiEndpoint || window.location.origin
+// Get API endpoint with priority: localStorage > runtime config > same origin
+const API_BASE = localStorage.getItem('satpass_api_endpoint') ||
+  window.satpassConfig?.apiEndpoint ||
+  window.location.origin
 
 export function useApi() {
   const loading = ref(false)
@@ -135,6 +137,20 @@ export function useApi() {
     }
   }
 
+  const getCatalogStats = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/catalog/stats`)
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   const getSystemStats = async () => {
     loading.value = true
     error.value = null
@@ -159,6 +175,7 @@ export function useApi() {
     bookmarkSatellite,
     unbookmarkSatellite,
     getCatalogGroups,
+    getCatalogStats,
     searchSatellites,
     getSystemStats
   }
