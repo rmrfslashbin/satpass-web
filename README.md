@@ -28,6 +28,8 @@ npm run preview
 
 ## API Integration
 
+### Development Mode
+
 The Vite dev server is configured to proxy API requests to `http://localhost:8080`. Make sure the satpass API server is running before starting the web interface:
 
 ```bash
@@ -36,6 +38,24 @@ The Vite dev server is configured to proxy API requests to `http://localhost:808
 ```
 
 Then access the web interface at `http://localhost:5173`
+
+### Production - Distributed Deployment
+
+The web UI can be deployed on a different server than the API server. After building, edit the `dist/config.js` file to point to your API server:
+
+```javascript
+window.satpassConfig = {
+  apiEndpoint: 'http://your-api-server.com:8080',
+  apiTimeout: 30000,
+}
+```
+
+The API server has CORS enabled to allow cross-origin requests from any domain.
+
+**Deployment options:**
+- **Nginx/Apache**: Serve the `dist/` directory as static files
+- **CDN**: Upload `dist/` contents to any CDN (Cloudflare, AWS S3, etc.)
+- **Same server**: The satpass API can serve the built files from `/ui` endpoint
 
 ## Features
 

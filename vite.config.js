@@ -3,7 +3,8 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/ui/',
+  // Use '/ui/' when serving from same host as API, or '/' for standalone deployment
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [vue()],
   server: {
     port: 5173,

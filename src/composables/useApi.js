@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 
-const API_BASE = window.location.origin
+// Get API endpoint from runtime config or fallback to same origin
+const API_BASE = window.satpassConfig?.apiEndpoint || window.location.origin
 
 export function useApi() {
   const loading = ref(false)
