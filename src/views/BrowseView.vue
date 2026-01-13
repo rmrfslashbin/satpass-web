@@ -33,44 +33,67 @@ onMounted(() => {
 
 <template>
   <div class="space-y-6">
-    <div class="bg-white rounded-lg shadow p-6">
-      <h2 class="text-2xl font-semibold text-gray-900 mb-4">Browse Catalog</h2>
+    <!-- Groups Section -->
+    <div class="rounded-xl overflow-hidden backdrop-blur-xl shadow-2xl
+      dark:bg-space-900/50 dark:border dark:border-cyber-500/30
+      bg-white/80 border border-mission-200/50">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold font-mono mb-6
+          dark:text-transparent dark:bg-clip-text dark:bg-cyber-gradient
+          text-transparent bg-clip-text bg-mission-gradient">
+          📡 BROWSE CATALOG
+        </h2>
 
-      <div v-if="api.loading.value" class="text-gray-600">
-        Loading groups...
-      </div>
+        <div v-if="api.loading.value" class="text-center py-8">
+          <div class="inline-block animate-pulse
+            dark:text-cyber-400 text-mission-600 font-mono">
+            ⟳ LOADING GROUPS...
+          </div>
+        </div>
 
-      <div v-else-if="groups.length === 0" class="text-gray-600">
-        No groups available
-      </div>
+        <div v-else-if="groups.length === 0" class="text-center py-8
+          dark:text-cyber-400/70 text-mission-600 font-mono">
+          NO GROUPS AVAILABLE
+        </div>
 
-      <div v-else class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          <button
-            v-for="group in groups"
-            :key="group"
-            @click="selectGroup(group)"
-            class="px-4 py-3 rounded-lg border-2 transition-all text-left"
-            :class="[
-              selectedGroup === group
-                ? 'border-primary-500 bg-primary-50 text-primary-900'
-                : 'border-gray-200 bg-white hover:border-primary-300 text-gray-700'
-            ]"
-          >
-            <div class="font-medium">{{ group }}</div>
-            <div class="text-sm text-gray-500">
-              {{ catalogStats[group] || 0 }} satellites
-            </div>
-          </button>
+        <div v-else class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <button
+              v-for="group in groups"
+              :key="group"
+              @click="selectGroup(group)"
+              class="px-4 py-4 rounded-lg border-2 transition-all text-left font-mono group
+                hover:scale-105 transform"
+              :class="[
+                selectedGroup === group
+                  ? 'dark:bg-cyber-gradient dark:border-cyber-400 dark:shadow-lg dark:shadow-cyber-500/50 bg-mission-gradient border-mission-600 shadow-lg shadow-mission-500/30 text-white scale-105'
+                  : 'dark:border-cyber-500/50 dark:bg-space-800/30 dark:hover:border-cyber-400 dark:text-cyber-300 border-mission-300 bg-white hover:border-mission-500 text-mission-700'
+              ]"
+            >
+              <div class="font-bold text-lg uppercase tracking-wide">
+                {{ group }}
+              </div>
+              <div class="text-sm mt-1"
+                :class="selectedGroup === group ? 'text-white/90' : 'dark:text-cyber-400/70 text-mission-500'">
+                {{ catalogStats[group] || 0 }} satellites
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div v-if="selectedGroup" class="bg-white rounded-lg shadow p-6">
-      <h3 class="text-xl font-semibold text-gray-900 mb-4">
-        {{ selectedGroup }}
-      </h3>
-      <SatelliteList :group="selectedGroup" :show-track-button="true" />
+    <!-- Selected Group Satellites -->
+    <div v-if="selectedGroup" class="rounded-xl overflow-hidden backdrop-blur-xl shadow-2xl animate-fade-in
+      dark:bg-space-900/50 dark:border dark:border-cyber-500/30
+      bg-white/80 border border-mission-200/50">
+      <div class="p-6">
+        <h3 class="text-xl font-bold font-mono mb-4 uppercase tracking-wide
+          dark:text-cyber-400 text-mission-700">
+          🛰️ {{ selectedGroup }}
+        </h3>
+        <SatelliteList :group="selectedGroup" :show-track-button="true" />
+      </div>
     </div>
   </div>
 </template>

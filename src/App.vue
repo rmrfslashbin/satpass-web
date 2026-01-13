@@ -1,20 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/vue'
 import { Cog6ToothIcon } from '@heroicons/vue/24/outline'
+import { useTheme } from './composables/useTheme'
 import BrowseView from './views/BrowseView.vue'
 import SearchView from './views/SearchView.vue'
 import TrackedView from './views/TrackedView.vue'
 import BookmarkedView from './views/BookmarkedView.vue'
 import StatsView from './views/StatsView.vue'
 import SettingsModal from './components/SettingsModal.vue'
+import ThemeSwitcher from './components/ThemeSwitcher.vue'
+
+const { } = useTheme()
 
 const tabs = [
-  { name: 'Browse', component: 'BrowseView' },
-  { name: 'Search', component: 'SearchView' },
-  { name: 'Tracked', component: 'TrackedView' },
-  { name: 'Bookmarked', component: 'BookmarkedView' },
-  { name: 'Stats', component: 'StatsView' }
+  { name: 'BROWSE', emoji: '🌍' },
+  { name: 'SEARCH', emoji: '🔍' },
+  { name: 'TRACKED', emoji: '📡' },
+  { name: 'BOOKMARKED', emoji: '⭐' },
+  { name: 'STATS', emoji: '📊' }
 ]
 
 const settingsOpen = ref(false)
@@ -25,58 +29,99 @@ const handleSave = (newEndpoint) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="container mx-auto px-4 py-8">
-      <div class="flex items-center justify-between mb-8">
-        <h1 class="text-4xl font-bold text-gray-900">
-          satpass - Satellite Tracker
-        </h1>
-        <button
-          @click="settingsOpen = true"
-          class="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
-          title="Settings"
-        >
-          <Cog6ToothIcon class="h-5 w-5" />
-          <span class="hidden sm:inline">Settings</span>
-        </button>
-      </div>
+  <div class="min-h-screen transition-colors duration-300
+    dark:bg-space-gradient bg-gradient-to-br from-gray-50 to-gray-100
+    dark:bg-grid-pattern dark:bg-grid
+    font-sans">
 
+    <!-- Animated header -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl
+      dark:bg-space-950/80 dark:border-b dark:border-cyber-500/30
+      bg-white/80 border-b border-mission-200/50
+      shadow-lg animate-slide-down">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo / Title -->
+          <div class="flex items-center gap-3 animate-fade-in">
+            <div class="text-4xl">🛰️</div>
+            <div>
+              <h1 class="text-2xl font-bold font-mono tracking-tight
+                dark:text-transparent dark:bg-clip-text dark:bg-cyber-gradient
+                text-transparent bg-clip-text bg-mission-gradient">
+                SATPASS
+              </h1>
+              <p class="text-xs font-mono
+                dark:text-cyber-400/70 text-mission-600">
+                Satellite Tracking System
+              </p>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="flex items-center gap-3">
+            <ThemeSwitcher />
+            <button
+              @click="settingsOpen = true"
+              class="flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all font-mono text-sm
+                dark:border-neon-500 dark:hover:border-neon-400 dark:bg-space-900/50 dark:text-neon-400 dark:hover:shadow-neon-500/50
+                border-mission-500 hover:border-mission-600 bg-white text-mission-700
+                hover:shadow-lg"
+              title="Settings"
+            >
+              <Cog6ToothIcon class="h-5 w-5" />
+              <span class="hidden sm:inline">CONFIG</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
       <TabGroup>
-        <TabList class="flex space-x-1 rounded-xl bg-primary-900/20 p-1">
+        <!-- Tab Navigation -->
+        <TabList class="flex gap-2 p-2 rounded-xl overflow-x-auto
+          dark:bg-space-900/50 dark:backdrop-blur
+          bg-white/50 backdrop-blur
+          shadow-lg">
           <Tab
-            v-for="tab in tabs"
+            v-for="(tab, index) in tabs"
             :key="tab.name"
             v-slot="{ selected }"
-            class="w-full rounded-lg py-2.5 text-sm font-medium leading-5 transition-all outline-none"
+            class="flex items-center gap-2 px-4 py-3 rounded-lg font-mono text-sm font-medium
+              transition-all duration-200 outline-none whitespace-nowrap
+              animate-fade-in"
+            :style="{ animationDelay: `${index * 50}ms` }"
             :class="[
               selected
-                ? 'bg-white text-primary-700 shadow'
-                : 'text-primary-600 hover:bg-white/[0.12] hover:text-primary-800'
+                ? 'dark:bg-cyber-gradient dark:text-white dark:shadow-lg dark:shadow-cyber-500/50 bg-mission-gradient text-white shadow-lg shadow-mission-500/30'
+                : 'dark:text-cyber-300 dark:hover:bg-space-800/50 dark:hover:text-cyber-200 text-mission-700 hover:bg-mission-50 hover:text-mission-800'
             ]"
           >
-            {{ tab.name }}
+            <span>{{ tab.emoji }}</span>
+            <span>{{ tab.name }}</span>
           </Tab>
         </TabList>
 
+        <!-- Tab Panels -->
         <TabPanels class="mt-6">
-          <TabPanel>
+          <TabPanel class="animate-fade-in">
             <BrowseView />
           </TabPanel>
-          <TabPanel>
+          <TabPanel class="animate-fade-in">
             <SearchView />
           </TabPanel>
-          <TabPanel>
+          <TabPanel class="animate-fade-in">
             <TrackedView />
           </TabPanel>
-          <TabPanel>
+          <TabPanel class="animate-fade-in">
             <BookmarkedView />
           </TabPanel>
-          <TabPanel>
+          <TabPanel class="animate-fade-in">
             <StatsView />
           </TabPanel>
         </TabPanels>
       </TabGroup>
-    </div>
+    </main>
 
     <!-- Settings Modal -->
     <SettingsModal

@@ -17,11 +17,17 @@ export function useApi() {
     return data
   }
 
-  const getSatellites = async () => {
+  const getSatellites = async ({ limit = 0, offset = 0 } = {}) => {
     loading.value = true
     error.value = null
     try {
-      const response = await fetch(`${API_BASE}/api/v1/satellites`)
+      const params = new URLSearchParams()
+      if (limit > 0) {
+        params.append('limit', limit.toString())
+        params.append('offset', offset.toString())
+      }
+      const url = `${API_BASE}/api/v1/satellites${params.toString() ? '?' + params.toString() : ''}`
+      const response = await fetch(url)
       return await handleResponse(response)
     } catch (err) {
       error.value = err.message
@@ -31,11 +37,19 @@ export function useApi() {
     }
   }
 
-  const getBookmarkedSatellites = async () => {
+  const getBookmarkedSatellites = async ({ limit = 0, offset = 0 } = {}) => {
     loading.value = true
     error.value = null
     try {
-      const response = await fetch(`${API_BASE}/api/v1/satellites/bookmarked`)
+      const params = new URLSearchParams({
+        bookmarked: 'true'
+      })
+      if (limit > 0) {
+        params.append('limit', limit.toString())
+        params.append('offset', offset.toString())
+      }
+      const url = `${API_BASE}/api/v1/satellites?${params.toString()}`
+      const response = await fetch(url)
       return await handleResponse(response)
     } catch (err) {
       error.value = err.message
@@ -123,11 +137,19 @@ export function useApi() {
     }
   }
 
-  const searchSatellites = async (query) => {
+  const searchSatellites = async (query, { limit = 0, offset = 0 } = {}) => {
     loading.value = true
     error.value = null
     try {
-      const response = await fetch(`${API_BASE}/api/v1/catalog/search?q=${encodeURIComponent(query)}`)
+      const params = new URLSearchParams({
+        q: query
+      })
+      if (limit > 0) {
+        params.append('limit', limit.toString())
+        params.append('offset', offset.toString())
+      }
+      const url = `${API_BASE}/api/v1/catalog/search?${params.toString()}`
+      const response = await fetch(url)
       return await handleResponse(response)
     } catch (err) {
       error.value = err.message
@@ -165,18 +187,149 @@ export function useApi() {
     }
   }
 
+  const getSatellite = async (noradId) => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/satellites/${noradId}`)
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const getPasses = async (noradId, { days = 7, minEl = 0, step = 60, format = 'json' } = {}) => {
+    loading.value = true
+    error.value = null
+    try {
+      const params = new URLSearchParams({
+        days: days.toString(),
+        min_el: minEl.toString(),
+        step: step.toString(),
+        format
+      })
+      const response = await fetch(`${API_BASE}/api/v1/satellites/${noradId}/passes?${params}`)
+
+      // Handle different response formats
+      if (format === 'csv') {
+        return await response.text()
+      } else if (format === 'ical' || format === 'ics') {
+        return await response.text()
+      } else {
+        return await handleResponse(response)
+      }
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const getTLE = async (noradId) => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/satellites/${noradId}/tle`)
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const getCatalogGroup = async (groupName, { limit = 0, offset = 0 } = {}) => {
+    loading.value = true
+    error.value = null
+    try {
+      const params = new URLSearchParams()
+      if (limit > 0) {
+        params.append('limit', limit.toString())
+        params.append('offset', offset.toString())
+      }
+      const url = `${API_BASE}/api/v1/catalog/groups/${encodeURIComponent(groupName)}${params.toString() ? '?' + params.toString() : ''}`
+      const response = await fetch(url)
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const getCatalogEntry = async (noradId) => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/catalog/satellites/${noradId}`)
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const getConfig = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/config`)
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const updateGroundStation = async (qth) => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/qth`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(qth)
+      })
+      return await handleResponse(response)
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     loading,
     error,
     getSatellites,
+    getSatellite,
     getBookmarkedSatellites,
     addSatellite,
     removeSatellite,
     bookmarkSatellite,
     unbookmarkSatellite,
     getCatalogGroups,
+    getCatalogGroup,
+    getCatalogEntry,
     getCatalogStats,
     searchSatellites,
-    getSystemStats
+    getPasses,
+    getTLE,
+    getConfig,
+    getSystemStats,
+    updateGroundStation
   }
 }
