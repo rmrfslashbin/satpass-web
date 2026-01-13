@@ -30,13 +30,12 @@ const handleSave = (newEndpoint) => {
 
 <template>
   <div class="min-h-screen transition-colors duration-300
-    dark:bg-space-gradient bg-gradient-to-br from-gray-50 to-gray-100
-    dark:bg-grid-pattern dark:bg-grid
+    dark:bg-space-900 dark:bg-stars-pattern bg-gradient-to-br from-gray-50 to-gray-100
     font-sans">
 
     <!-- Animated header -->
     <header class="sticky top-0 z-40 backdrop-blur-xl
-      dark:bg-space-950/80 dark:border-b dark:border-cyber-500/30
+      dark:bg-space-850/95 dark:border-b dark:border-space-700/30
       bg-white/80 border-b border-mission-200/50
       shadow-lg animate-slide-down">
       <div class="container mx-auto px-4 py-4">
@@ -46,12 +45,12 @@ const handleSave = (newEndpoint) => {
             <div class="text-4xl">🛰️</div>
             <div>
               <h1 class="text-2xl font-bold font-mono tracking-tight
-                dark:text-transparent dark:bg-clip-text dark:bg-cyber-gradient
+                dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-purple
                 text-transparent bg-clip-text bg-mission-gradient">
                 SATPASS
               </h1>
               <p class="text-xs font-mono
-                dark:text-cyber-400/70 text-mission-600">
+                dark:text-slate-400/70 text-mission-600">
                 Satellite Tracking System
               </p>
             </div>
@@ -63,7 +62,7 @@ const handleSave = (newEndpoint) => {
             <button
               @click="settingsOpen = true"
               class="flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all font-mono text-sm
-                dark:border-neon-500 dark:hover:border-neon-400 dark:bg-space-900/50 dark:text-neon-400 dark:hover:shadow-neon-500/50
+                dark:border-accent-purple dark:hover:border-accent-purple/80 dark:bg-slate-900/50 dark:text-accent-purple dark:hover:shadow-accent-purple/50
                 border-mission-500 hover:border-mission-600 bg-white text-mission-700
                 hover:shadow-lg"
               title="Settings"
@@ -80,7 +79,7 @@ const handleSave = (newEndpoint) => {
       <TabGroup>
         <!-- Tab Navigation -->
         <TabList class="flex gap-2 p-2 rounded-xl overflow-x-auto
-          dark:bg-space-900/50 dark:backdrop-blur
+          dark:bg-space-850 dark:backdrop-blur
           bg-white/50 backdrop-blur
           shadow-lg">
           <Tab
@@ -93,8 +92,8 @@ const handleSave = (newEndpoint) => {
             :style="{ animationDelay: `${index * 50}ms` }"
             :class="[
               selected
-                ? 'dark:bg-cyber-gradient dark:text-white dark:shadow-lg dark:shadow-cyber-500/50 bg-mission-gradient text-white shadow-lg shadow-mission-500/30'
-                : 'dark:text-cyber-300 dark:hover:bg-space-800/50 dark:hover:text-cyber-200 text-mission-700 hover:bg-mission-50 hover:text-mission-800'
+                ? 'dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-teal dark:text-white dark:shadow-lg dark:shadow-slate-500/50 bg-mission-gradient text-white shadow-lg shadow-mission-500/30'
+                : 'dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-200 text-mission-700 hover:bg-mission-50 hover:text-mission-800'
             ]"
           >
             <span>{{ tab.emoji }}</span>

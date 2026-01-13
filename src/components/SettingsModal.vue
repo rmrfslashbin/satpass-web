@@ -104,7 +104,7 @@ const resetToDefault = () => {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        <div class="fixed inset-0 dark:bg-black/70 bg-gray-500 bg-opacity-75 backdrop-blur-sm transition-opacity" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -118,11 +118,17 @@ const resetToDefault = () => {
             leave-from="opacity-100 translate-y-0 sm:scale-100"
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+            <DialogPanel class="relative transform overflow-hidden rounded-xl backdrop-blur-xl border-2
+              dark:bg-space-850/95 dark:border-space-700/50
+              bg-white border-gray-200
+              px-4 pb-4 pt-5 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
               <div class="absolute right-0 top-0 pr-4 pt-4">
                 <button
                   type="button"
-                  class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  class="rounded-md transition-all
+                    dark:bg-transparent dark:text-accent-blue dark:hover:bg-space-800/50
+                    bg-white text-gray-400 hover:text-gray-500
+                    focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                   @click="$emit('close')"
                 >
                   <XMarkIcon class="h-6 w-6" />
@@ -130,17 +136,22 @@ const resetToDefault = () => {
               </div>
 
               <div class="sm:flex sm:items-start">
-                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <Cog6ToothIcon class="h-6 w-6 text-primary-600" />
+                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full
+                  dark:bg-accent-purple/20 bg-primary-100
+                  sm:mx-0 sm:h-10 sm:w-10">
+                  <Cog6ToothIcon class="h-6 w-6 dark:text-accent-purple text-primary-600" />
                 </div>
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left flex-1">
-                  <DialogTitle as="h3" class="text-lg font-semibold leading-6 text-gray-900">
-                    Settings
+                  <DialogTitle as="h3" class="text-lg font-bold font-mono leading-6
+                    dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-purple
+                    text-gray-900">
+                    ⚙️ SETTINGS
                   </DialogTitle>
                   <div class="mt-4 space-y-4">
                     <!-- API Endpoint Input -->
                     <div>
-                      <label for="api-endpoint" class="block text-sm font-medium text-gray-700 mb-1">
+                      <label for="api-endpoint" class="block text-sm font-mono font-medium mb-1
+                        dark:text-accent-blue text-gray-700">
                         API Server Endpoint
                       </label>
                       <input
@@ -148,10 +159,13 @@ const resetToDefault = () => {
                         v-model="apiEndpoint"
                         type="text"
                         placeholder="http://localhost:8080"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        class="w-full px-3 py-2 border-2 rounded-lg font-mono text-sm
+                          dark:bg-space-800/50 dark:border-space-700 dark:text-slate-200 dark:placeholder-slate-500
+                          dark:focus:border-accent-blue
+                          border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         @input="testStatus = null"
                       />
-                      <p class="mt-1 text-xs text-gray-500">
+                      <p class="mt-1 text-xs font-mono dark:text-slate-400 text-gray-500">
                         Enter the URL where the satpass API server is running
                       </p>
                     </div>
@@ -161,31 +175,37 @@ const resetToDefault = () => {
                       <button
                         @click="testConnection"
                         :disabled="!isValidUrl || testStatus === 'testing'"
-                        class="w-full px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        class="w-full px-4 py-2 rounded-lg font-mono font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed
+                          dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-teal dark:hover:shadow-lg dark:hover:shadow-space-500/50 dark:text-white
+                          bg-primary-600 hover:bg-primary-700 text-white"
                       >
-                        {{ testStatus === 'testing' ? 'Testing...' : 'Test Connection' }}
+                        {{ testStatus === 'testing' ? '⟳ TESTING...' : '🔗 TEST CONNECTION' }}
                       </button>
                     </div>
 
                     <!-- Test Status Message -->
                     <div
                       v-if="testStatus && testStatus !== 'testing'"
-                      class="p-3 rounded-md"
+                      class="p-3 rounded-lg border-2 font-mono"
                       :class="{
-                        'bg-green-50 text-green-800': testStatus === 'success',
-                        'bg-red-50 text-red-800': testStatus === 'error'
+                        'dark:bg-green-900/20 dark:border-green-700/50 dark:text-green-300 bg-green-50 border-green-300 text-green-800': testStatus === 'success',
+                        'dark:bg-red-900/20 dark:border-red-700/50 dark:text-red-300 bg-red-50 border-red-300 text-red-800': testStatus === 'error'
                       }"
                     >
                       <p class="text-sm">{{ testMessage }}</p>
                     </div>
 
                     <!-- Current Settings Info -->
-                    <div class="bg-gray-50 p-3 rounded-md">
-                      <p class="text-xs text-gray-600 mb-1">
-                        <strong>Current:</strong> {{ currentEndpoint }}
+                    <div class="p-3 rounded-lg border-2 font-mono
+                      dark:bg-space-800/30 dark:border-space-700/50
+                      bg-gray-50 border-gray-300">
+                      <p class="text-xs mb-1
+                        dark:text-slate-400 text-gray-600">
+                        <strong class="dark:text-slate-300 text-gray-800">Current:</strong> {{ currentEndpoint }}
                       </p>
-                      <p class="text-xs text-gray-600">
-                        <strong>Default:</strong> {{ getDefaultEndpoint() }}
+                      <p class="text-xs
+                        dark:text-slate-400 text-gray-600">
+                        <strong class="dark:text-slate-300 text-gray-800">Default:</strong> {{ getDefaultEndpoint() }}
                       </p>
                     </div>
                   </div>
@@ -195,25 +215,31 @@ const resetToDefault = () => {
               <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse gap-2">
                 <button
                   type="button"
-                  class="inline-flex w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 sm:w-auto"
+                  class="inline-flex w-full justify-center rounded-lg px-5 py-2 font-mono font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transform sm:w-auto
+                    dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-teal dark:hover:shadow-lg dark:hover:shadow-space-500/50 dark:text-white
+                    bg-primary-600 hover:bg-primary-700 text-white shadow-sm"
                   @click="saveSettings"
                   :disabled="!isValidUrl"
                 >
-                  Save & Reload
+                  💾 SAVE & RELOAD
                 </button>
                 <button
                   type="button"
-                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                  class="mt-3 inline-flex w-full justify-center rounded-lg px-5 py-2 font-mono font-bold transition-all hover:scale-105 transform sm:mt-0 sm:w-auto
+                    dark:bg-space-800/50 dark:border-2 dark:border-space-700/50 dark:text-accent-purple dark:hover:border-accent-purple
+                    bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm"
                   @click="resetToDefault"
                 >
-                  Reset to Default
+                  🔄 RESET
                 </button>
                 <button
                   type="button"
-                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                  class="mt-3 inline-flex w-full justify-center rounded-lg px-5 py-2 font-mono font-bold transition-all hover:scale-105 transform sm:mt-0 sm:w-auto
+                    dark:bg-space-800/50 dark:border-2 dark:border-space-700/50 dark:text-slate-400 dark:hover:border-slate-400
+                    bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm"
                   @click="$emit('close')"
                 >
-                  Cancel
+                  ✕ CANCEL
                 </button>
               </div>
             </DialogPanel>

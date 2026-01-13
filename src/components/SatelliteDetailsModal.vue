@@ -107,21 +107,21 @@ const closeModal = () => {
           >
             <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-xl
               backdrop-blur-xl shadow-2xl transition-all
-              dark:bg-space-900/90 dark:border-2 dark:border-cyber-500/50
+              dark:bg-space-850/95 dark:border-2 dark:border-space-700/50
               bg-white/90 border-2 border-mission-200">
 
               <!-- Header -->
               <div class="flex items-center justify-between p-4 border-b-2
-                dark:border-cyber-500/30 border-mission-200">
+                dark:border-space-700/30 border-mission-200">
                 <DialogTitle class="text-xl font-bold font-mono
-                  dark:text-transparent dark:bg-clip-text dark:bg-cyber-gradient
+                  dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-purple
                   text-transparent bg-clip-text bg-mission-gradient">
                   🛰️ SATELLITE DETAILS
                 </DialogTitle>
                 <button
                   @click="closeModal"
                   class="p-1 rounded-lg transition-all hover:scale-110
-                    dark:text-cyber-400 dark:hover:bg-space-800/50
+                    dark:text-accent-blue dark:hover:bg-space-800/50
                     text-mission-700 hover:bg-mission-100"
                 >
                   <XMarkIcon class="h-5 w-5" />
@@ -131,7 +131,7 @@ const closeModal = () => {
               <!-- Content -->
               <div class="p-4 space-y-4">
                 <div v-if="loading" class="text-center py-8">
-                  <div class="inline-block animate-pulse dark:text-cyber-400 text-mission-600 font-mono">
+                  <div class="inline-block animate-pulse dark:text-accent-blue text-mission-600 font-mono">
                     ⟳ LOADING DETAILS...
                   </div>
                 </div>
@@ -140,33 +140,33 @@ const closeModal = () => {
                   <!-- Basic Info -->
                   <div>
                     <h3 class="text-base font-bold font-mono mb-2 uppercase tracking-wide
-                      dark:text-cyber-400 text-mission-700">
+                      dark:text-accent-blue text-mission-700">
                       📡 IDENTIFICATION
                     </h3>
                     <div class="p-3 rounded-lg border-2 space-y-2 font-mono
-                      dark:bg-space-800/30 dark:border-cyber-500/50
+                      dark:bg-space-800/30 dark:border-space-700/50
                       bg-gray-50 border-gray-300">
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">Name:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">Name:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ satName }}
                         </span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">NORAD ID:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">NORAD ID:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ noradId }}
                         </span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">Group:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">Group:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ satGroup }}
                         </span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">Int'l Designator:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">Int'l Designator:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ intlDesignator }}
                         </span>
                       </div>
@@ -176,28 +176,28 @@ const closeModal = () => {
                   <!-- TLE Data -->
                   <div v-if="tle">
                     <h3 class="text-base font-bold font-mono mb-2 uppercase tracking-wide
-                      dark:text-cyber-400 text-mission-700">
+                      dark:text-accent-blue text-mission-700">
                       📊 ORBITAL DATA (TLE)
                     </h3>
                     <div class="p-3 rounded-lg border-2 space-y-2 font-mono
-                      dark:bg-space-800/30 dark:border-cyber-500/50
+                      dark:bg-space-800/30 dark:border-space-700/50
                       bg-gray-50 border-gray-300">
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">Epoch:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">Epoch:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ formatDate(tle.epoch) }}
                         </span>
                       </div>
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">Last Fetched:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">Last Fetched:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ formatDate(tle.fetched_at) }}
                         </span>
                       </div>
                       <div class="mt-2">
-                        <div class="text-xs dark:text-cyber-400/70 text-gray-600 mb-1">TLE Lines:</div>
+                        <div class="text-xs dark:text-slate-400 text-gray-600 mb-1">TLE Lines:</div>
                         <div class="bg-black/20 p-2 rounded text-xs overflow-x-auto
-                          dark:text-cyber-300 text-gray-800">
+                          dark:text-slate-200 text-gray-800">
                           <div>{{ tle.tle_line1 }}</div>
                           <div>{{ tle.tle_line2 }}</div>
                         </div>
@@ -208,15 +208,15 @@ const closeModal = () => {
                   <!-- Catalog Info -->
                   <div v-if="catalogEntry">
                     <h3 class="text-base font-bold font-mono mb-2 uppercase tracking-wide
-                      dark:text-cyber-400 text-mission-700">
+                      dark:text-accent-blue text-mission-700">
                       📚 CATALOG INFO
                     </h3>
                     <div class="p-3 rounded-lg border-2 space-y-2 font-mono
-                      dark:bg-space-800/30 dark:border-cyber-500/50
+                      dark:bg-space-800/30 dark:border-space-700/50
                       bg-gray-50 border-gray-300">
                       <div class="flex justify-between">
-                        <span class="dark:text-cyber-400/70 text-gray-600">Last Updated:</span>
-                        <span class="font-bold dark:text-cyber-300 text-gray-900">
+                        <span class="dark:text-slate-400 text-gray-600">Last Updated:</span>
+                        <span class="font-bold dark:text-slate-200 text-gray-900">
                           {{ formatDate(catalogEntry.last_updated) }}
                         </span>
                       </div>
@@ -227,11 +227,11 @@ const closeModal = () => {
 
               <!-- Footer -->
               <div class="flex justify-end gap-3 p-4 border-t-2
-                dark:border-cyber-500/30 border-mission-200">
+                dark:border-space-700/30 border-mission-200">
                 <button
                   @click="closeModal"
                   class="px-5 py-2 rounded-lg font-mono font-bold transition-all
-                    dark:bg-space-800/50 dark:border-2 dark:border-cyber-500/50 dark:text-cyber-400 dark:hover:border-cyber-400
+                    dark:bg-space-800/50 dark:border-2 dark:border-space-700/50 dark:text-accent-blue dark:hover:border-cyber-400
                     bg-gray-100 border-2 border-gray-300 text-gray-700 hover:bg-gray-200
                     hover:scale-105 transform"
                 >

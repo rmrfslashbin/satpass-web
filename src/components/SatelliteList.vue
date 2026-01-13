@@ -77,13 +77,13 @@ watch(() => props.group, () => {
 <template>
   <div>
     <div v-if="api.loading.value" class="text-center py-8">
-      <div class="inline-block animate-pulse dark:text-cyber-400 text-mission-600 font-mono">
+      <div class="inline-block animate-pulse dark:text-slate-400 text-mission-600 font-mono">
         ⟳ LOADING SATELLITES...
       </div>
     </div>
 
     <div v-else-if="satellites.length === 0" class="text-center py-8
-      dark:text-cyber-400/70 text-mission-600 font-mono">
+      dark:text-slate-400/70 text-mission-600 font-mono">
       NO SATELLITES FOUND
     </div>
 
@@ -92,16 +92,16 @@ watch(() => props.group, () => {
         v-for="satellite in satellites"
         :key="satellite.norad_id"
         class="flex items-center justify-between p-4 rounded-lg border-2 transition-all group
-          dark:border-cyber-500/30 dark:bg-space-800/20 dark:hover:border-cyber-400 dark:hover:bg-space-800/40
+          dark:border-slate-500/30 dark:bg-slate-800/20 dark:hover:border-accent-blue dark:hover:bg-slate-800/40
           border-mission-200 bg-white hover:border-mission-400 hover:shadow-lg"
       >
         <div class="font-mono cursor-pointer flex-1" @click="viewDetails(satellite)">
           <div class="font-bold
-            dark:text-cyber-300 text-mission-800 group-hover:underline">
+            dark:text-slate-300 text-mission-800 group-hover:underline">
             {{ satellite.name }}
           </div>
           <div class="text-sm mt-1
-            dark:text-cyber-400/70 text-mission-600">
+            dark:text-slate-400/70 text-mission-600">
             NORAD: {{ satellite.norad_id }}
           </div>
         </div>
@@ -109,7 +109,7 @@ watch(() => props.group, () => {
           v-if="showTrackButton"
           @click.stop="handleTrack(satellite)"
           class="px-4 py-2 rounded-lg font-mono font-bold transition-all
-            dark:bg-neon-500 dark:hover:bg-neon-400 dark:text-white dark:shadow-lg dark:shadow-neon-500/50 dark:hover:shadow-neon-400/50
+            dark:bg-accent-teal dark:hover:bg-accent-teal/80 dark:text-white dark:shadow-lg dark:shadow-slate-500/50 dark:hover:shadow-accent-teal/50
             bg-mission-600 hover:bg-mission-700 text-white shadow-lg shadow-mission-500/30 hover:shadow-mission-600/50
             hover:scale-105 transform"
         >

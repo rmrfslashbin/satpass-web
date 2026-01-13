@@ -20,7 +20,7 @@ const currentThemeIcon = () => {
 <template>
   <Menu as="div" class="relative">
     <MenuButton class="flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all
-      dark:border-cyber-500 dark:hover:border-cyber-400 dark:bg-space-900/50 dark:text-cyber-400
+      dark:border-accent-blue dark:hover:border-accent-blue/80 dark:bg-slate-900/50 dark:text-accent-blue
       border-mission-500 hover:border-mission-600 bg-white text-mission-700
       hover:shadow-lg">
       <component :is="currentThemeIcon()" class="h-5 w-5" />
@@ -28,7 +28,7 @@ const currentThemeIcon = () => {
     </MenuButton>
 
     <MenuItems class="absolute right-0 mt-2 w-48 origin-top-right rounded-lg shadow-2xl ring-1
-      dark:bg-space-900 dark:ring-cyber-500/50
+      dark:bg-slate-900 dark:ring-slate-500/50
       bg-white ring-gray-200
       overflow-hidden">
       <MenuItem
@@ -41,10 +41,10 @@ const currentThemeIcon = () => {
           class="flex w-full items-center gap-3 px-4 py-3 text-sm font-mono transition-colors"
           :class="[
             active
-              ? 'dark:bg-cyber-900/50 dark:text-cyber-300 bg-mission-50 text-mission-800'
+              ? 'dark:bg-slate-800/50 dark:text-slate-300 bg-mission-50 text-mission-800'
               : 'dark:text-gray-300 text-gray-700',
             theme === themeOption.value
-              ? 'dark:bg-cyber-800/30 dark:text-cyber-400 bg-mission-100 text-mission-700 font-bold'
+              ? 'dark:bg-accent-blue/30 dark:text-accent-blue bg-mission-100 text-mission-700 font-bold'
               : ''
           ]"
         >

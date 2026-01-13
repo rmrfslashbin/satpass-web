@@ -80,23 +80,23 @@ onMounted(() => {
 
 <template>
   <div class="rounded-xl overflow-hidden backdrop-blur-xl shadow-2xl
-    dark:bg-space-900/50 dark:border dark:border-cyber-500/30
+    dark:bg-space-850 dark:border dark:border-space-700/30
     bg-white/80 border border-mission-200/50">
     <div class="p-6">
       <h2 class="text-2xl font-bold font-mono mb-6
-        dark:text-transparent dark:bg-clip-text dark:bg-cyber-gradient
+        dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-accent-blue dark:to-accent-purple
         text-transparent bg-clip-text bg-mission-gradient">
         📡 TRACKED SATELLITES
       </h2>
 
       <div v-if="api.loading.value" class="text-center py-8">
-        <div class="inline-block animate-pulse dark:text-cyber-400 text-mission-600 font-mono">
+        <div class="inline-block animate-pulse dark:text-slate-400 text-mission-600 font-mono">
           ⟳ LOADING...
         </div>
       </div>
 
       <div v-else-if="satellites.length === 0" class="text-center py-8
-        dark:text-cyber-400/70 text-mission-600 font-mono">
+        dark:text-slate-400/70 text-mission-600 font-mono">
         NO SATELLITES TRACKED<br />
         <span class="text-sm mt-2 block">Use BROWSE or SEARCH to add satellites</span>
       </div>
@@ -106,16 +106,16 @@ onMounted(() => {
           v-for="satellite in satellites"
           :key="satellite.norad_id"
           class="flex items-center justify-between p-4 rounded-lg border-2 transition-all group
-            dark:border-cyber-500/30 dark:bg-space-800/20 dark:hover:border-cyber-400
+            dark:border-slate-500/30 dark:bg-slate-800/20 dark:hover:border-accent-blue
             border-mission-200 bg-white hover:border-mission-400 hover:shadow-lg"
         >
           <div class="font-mono cursor-pointer flex-1" @click="viewDetails(satellite)">
             <div class="font-bold
-              dark:text-cyber-300 text-mission-800 group-hover:underline">
+              dark:text-slate-300 text-mission-800 group-hover:underline">
               {{ satellite.name }}
             </div>
             <div class="text-sm mt-1
-              dark:text-cyber-400/70 text-mission-600">
+              dark:text-slate-400/70 text-mission-600">
               NORAD: {{ satellite.norad_id }}
             </div>
           </div>
@@ -125,8 +125,8 @@ onMounted(() => {
               class="px-4 py-2 rounded-lg font-mono font-bold transition-all hover:scale-105 transform"
               :class="[
                 satellite.bookmarked
-                  ? 'dark:bg-neon-500/20 dark:border-2 dark:border-neon-400 dark:text-neon-300 bg-yellow-100 border-2 border-yellow-400 text-yellow-700 hover:bg-yellow-200'
-                  : 'dark:bg-space-800/50 dark:border-2 dark:border-cyber-500/50 dark:text-cyber-400 dark:hover:border-cyber-400 bg-gray-100 border-2 border-gray-300 text-gray-700 hover:bg-gray-200'
+                  ? 'dark:bg-accent-purple/20 dark:border-2 dark:border-accent-purple dark:text-accent-purple bg-yellow-100 border-2 border-yellow-400 text-yellow-700 hover:bg-yellow-200'
+                  : 'dark:bg-slate-800/50 dark:border-2 dark:border-slate-500/50 dark:text-slate-400 dark:hover:border-slate-400 bg-gray-100 border-2 border-gray-300 text-gray-700 hover:bg-gray-200'
               ]"
             >
               {{ satellite.bookmarked ? '⭐ BOOKMARKED' : '☆ BOOKMARK' }}

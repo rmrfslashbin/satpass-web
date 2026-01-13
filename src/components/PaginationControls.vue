@@ -84,19 +84,19 @@ const pageNumbers = computed(() => {
 
 <template>
   <div class="flex items-center justify-between px-4 py-3 border-t
-    dark:border-cyber-500/30 dark:bg-space-800/30
+    dark:border-slate-500/30 dark:bg-slate-800/30
     border-gray-200 bg-gray-50">
     <!-- Results info -->
     <div class="flex-1 flex items-center justify-between">
       <div>
         <p class="text-sm font-mono
-          dark:text-cyber-400 text-gray-700">
+          dark:text-slate-400 text-gray-700">
           Showing
-          <span class="font-bold dark:text-cyber-300 text-gray-900">{{ startItem }}</span>
+          <span class="font-bold dark:text-slate-300 text-gray-900">{{ startItem }}</span>
           to
-          <span class="font-bold dark:text-cyber-300 text-gray-900">{{ endItem }}</span>
+          <span class="font-bold dark:text-slate-300 text-gray-900">{{ endItem }}</span>
           of
-          <span class="font-bold dark:text-cyber-300 text-gray-900">{{ totalItems }}</span>
+          <span class="font-bold dark:text-slate-300 text-gray-900">{{ totalItems }}</span>
           results
         </p>
       </div>
@@ -104,7 +104,7 @@ const pageNumbers = computed(() => {
       <!-- Items per page selector -->
       <div class="flex items-center space-x-2">
         <label for="per-page" class="text-sm font-mono
-          dark:text-cyber-400 text-gray-700">
+          dark:text-slate-400 text-gray-700">
           Per page:
         </label>
         <select
@@ -112,7 +112,7 @@ const pageNumbers = computed(() => {
           :value="itemsPerPage"
           @change="changePerPage"
           class="border rounded px-2 py-1 text-sm font-mono
-            dark:bg-space-700 dark:border-cyber-500/50 dark:text-cyber-300
+            dark:bg-slate-700 dark:border-slate-500/50 dark:text-slate-300
             bg-white border-gray-300 text-gray-900
             focus:ring-2 focus:ring-primary-500 focus:border-transparent"
         >
@@ -131,8 +131,8 @@ const pageNumbers = computed(() => {
         @click="previousPage"
         :disabled="!canGoPrevious"
         class="p-2 rounded border font-mono text-sm transition-colors
-          dark:border-cyber-500/50 dark:text-cyber-300
-          dark:hover:bg-cyber-500/20 dark:disabled:opacity-30 dark:disabled:cursor-not-allowed
+          dark:border-slate-500/50 dark:text-slate-300
+          dark:hover:bg-accent-blue/20 dark:disabled:opacity-30 dark:disabled:cursor-not-allowed
           border-gray-300 text-gray-700
           hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
         aria-label="Previous page"
@@ -148,9 +148,9 @@ const pageNumbers = computed(() => {
           @click="page !== '...' && goToPage(page)"
           :disabled="page === '...'"
           :class="{
-            'dark:bg-cyber-500/30 dark:border-cyber-400 dark:text-cyber-200 bg-primary-600 border-primary-700 text-white': page === currentPage,
-            'dark:border-cyber-500/50 dark:text-cyber-300 dark:hover:bg-cyber-500/20 border-gray-300 text-gray-700 hover:bg-gray-100': page !== currentPage && page !== '...',
-            'dark:text-cyber-400/50 text-gray-400 cursor-default': page === '...'
+            'dark:bg-accent-blue/30 dark:border-accent-blue dark:text-slate-200 bg-primary-600 border-primary-700 text-white': page === currentPage,
+            'dark:border-slate-500/50 dark:text-slate-300 dark:hover:bg-accent-blue/20 border-gray-300 text-gray-700 hover:bg-gray-100': page !== currentPage && page !== '...',
+            'dark:text-slate-400/50 text-gray-400 cursor-default': page === '...'
           }"
           class="px-3 py-1 rounded border font-mono text-sm transition-colors min-w-[2.5rem]"
         >
@@ -163,8 +163,8 @@ const pageNumbers = computed(() => {
         @click="nextPage"
         :disabled="!canGoNext"
         class="p-2 rounded border font-mono text-sm transition-colors
-          dark:border-cyber-500/50 dark:text-cyber-300
-          dark:hover:bg-cyber-500/20 dark:disabled:opacity-30 dark:disabled:cursor-not-allowed
+          dark:border-slate-500/50 dark:text-slate-300
+          dark:hover:bg-accent-blue/20 dark:disabled:opacity-30 dark:disabled:cursor-not-allowed
           border-gray-300 text-gray-700
           hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
         aria-label="Next page"
